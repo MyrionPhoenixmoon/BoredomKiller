@@ -1,0 +1,4 @@
+BoredomKiller is a simple Java tool for those moments when you can't decide what you wanna play. (Well, it will be :) )
+
+It reads an XML file with your game list and randomly chooses one of the games.
+You can set it to only choose amongst Co-Op games and various other filters and you can add Challenges.
