@@ -1,0 +1,47 @@
+Features
+////////////////////////////////
+v1.0 JJ - Creation
+v1.1 PM - Idea dump: Community
+///////////////////////////////
+
+Facebook / Twitter Integration
+**********************************
+
+TBB could post an update on Facebook and twitter, which contains what exactly was rolled.
+
+//////////////////////////////
+
+Twitch Livestream
+***********************************
+
+We could Livestream what we play on Twitch.tv.
+This information would also be automatically posted on FB and Twitter.
+TBB should also append the exact game + mode/map + challenge to the description on twitch.
+
+/////////////////////////////////
+
+Statistics
+**********************************
+
+TBB could record statistics of the games that are play, the challenges, if they are succeeded, etc. etc.
+Of course this would mean more work on the sides of TBB interface and Database.
+
+///////////////////////////////////
+
+Player Names
+**********************************
+
+At the beginning, TBB could ask for Player Names, so the Activity of individual Players on the System could be recorded in the statistics.
+This would also serve to define the amount of Players.
+
+////////////////////////////////////
+
+Community
+**********************************
+
+Once we've got a solid setup, we could try to build a community. This community should feature
+a website, where players can register themselves and stream their TBB Challenges. Our open source apps should be downloadable.
+Later, we could try to implement some kinds of leaderboards, although we'd have to think of a good point system for it.
+
+Once we've got some decent ideas on this community stuff, we should open an extra txt file for it, but for now it's just
+OUR setup.

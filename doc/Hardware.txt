@@ -1,0 +1,41 @@
+HARDWARE
+////////////////////////////////////
+v1.0 JJ - Creation
+v1.1 JJ - Added Speaker, Criteria Interface
+////////////////////////////////////
+
+Button
+**************************************
+
+http://cdn.ubergizmo.com/photos/2007/6/usb-stress-button.jpg
+http://earlytechnews.files.wordpress.com/2009/12/usb_panic_button-400-400.jpg
+
+////////////////////////////////////
+
+Display
+**************************************
+
+http://www.cutebitz.com/images/products/led_display1.png
+http://i01.i.aliimg.com/photo/v0/362831987/USB_mini_led_desktop_display.jpg
+
+Displays information part for part in a loop.
+
+////////////////////////////////////
+
+Speaker
+**************************************
+
+Small beeping speaker, to perform entertainig sound effects while rolling. (Boopin-Ass Game)
+
+////////////////////////////////////
+
+Criteria Interface
+***************************************
+
+We're gonna need some kind of interface to post the criteria to the script/application.
+
+Proposals:
+- Tablet
+- Same display to display the result is used for criteria selection. Will need something to control it. (basic controller?)
+  http://www.thinkgeek.com/images/products/zoom/ba5a_retro_nes_usb_controller.jpg
+  http://www.geekalerts.com/u/atari-usb.jpg

@@ -1,0 +1,13 @@
+Database and Criteria
+///////////////////////////////////////
+v1.0 JJ - Creation
+///////////////////////////////////////
+
+Databases
+***************************************
+
+We will probably need more than one Database. The main one, with all the games, and their attributes (co-op/versus, how many players, genre, etc.)
+Another one for the challenges. And then yet another one for the maluses. Maybe we even need one for the statistics, but that one can be implemented,
+once we've decided if and how we are gonna record statistics.
+
+//Still under discussion

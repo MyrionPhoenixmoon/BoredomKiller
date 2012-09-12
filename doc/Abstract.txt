@@ -1,0 +1,13 @@
+Abstract
+//////////////////////////////////
+v1.0: JJ - Creation
+//////////////////////////////////
+These documents contain all the collected ideas, for a mechanic codenamed "The Boredom Button".
+The concept of which is described in this document.
+
+The Boredom Button [afterwards referenced as TBB] is a button, which is to be placed easily reachable in the living room.
+Whenever someone declares, that they're bored, TBB has to be pressed.
+TBB is given a set of criteria, which can also be empty. It will then proceed to display a randomly chosen entry of it's database,
+which is filled with boredom eliminating activities, which meets the criteria.
+If TBB is pressed, the person or group pressing TBB has to participate in the chosen activity.
+Since TBB accepts a well designed set of criteria, TBB should, if used correctly, always produce a pleasing result.

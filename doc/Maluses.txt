@@ -1,0 +1,41 @@
+Maluses (Yes this is the correct plural form of Malus.)
+////////////////////////////////////////////
+v1.0 JJ - Creation
+////////////////////////////////////////////
+
+Description
+********************************************
+
+Whenever a goal or challenge provided by TBB isn't met, the participating party has to roll a malus, they have to undergo.
+TBB will have an integrated Database filled with various maluses.
+Therefore, if a malus needs to be rolled, TBB needs to be activated again, with the parameters to roll the malus.
+
+If TBB is activated in versus mode, the malus will be rolled in versus mode to.
+
+/////////////////////////////////////////////
+
+Categories
+********************************************
+
+- 1P Malus
+- 2P Malus
+- 3+P Malus
+- Versus Malus
+
+1P Maluses
+*********************************************
+
+
+
+2P Maluses
+*********************************************
+
+
+
+3+P Maluses
+********************************************
+
+
+
+Versus Maluses
+*********************************************
