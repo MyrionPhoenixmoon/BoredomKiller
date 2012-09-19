@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -22,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.TitledBorder;
 
 public class MainView extends JFrame implements ActionListener{
 
@@ -40,8 +42,9 @@ public class MainView extends JFrame implements ActionListener{
 	//filterPanel contents
 	//Players stuff
 	private JLabel playersLabel = new JLabel("Players");
-	private JScrollPane playerScrollPane = new JScrollPane();
+	private JPanel playerListPanel = new JPanel();
 	private JList playerList = new JList();
+	private JScrollPane playerScrollPane = new JScrollPane(playerList);
 	private JButton playerAdd = new JButton("Add");
 	private JButton playerRemove = new JButton("Remove");
 	
@@ -53,8 +56,8 @@ public class MainView extends JFrame implements ActionListener{
 	
 	//Genre stuff
 	private JLabel genreLabel = new JLabel("Genre");
-	private JScrollPane genreScrollPane = new JScrollPane();
 	private JPanel genrePanel = new JPanel();
+	private JScrollPane genreScrollPane = new JScrollPane(genrePanel);
 	private JButton genreCheck = new JButton("Check All");
 	private JButton genreUncheck = new JButton("Uncheck All");
 	//Placeholders
@@ -71,8 +74,8 @@ public class MainView extends JFrame implements ActionListener{
 	
 	//Platform stuff
 	private JLabel platformLabel = new JLabel("Platform");
-	private JScrollPane platformScrollPane = new JScrollPane();
 	private JPanel platformPanel = new JPanel();
+	private JScrollPane platformScrollPane = new JScrollPane(platformPanel);
 	private JButton platformCheck = new JButton("Check All");
 	private JButton platformUncheck = new JButton("Uncheck All");
 	//Placeholders
@@ -108,7 +111,7 @@ public class MainView extends JFrame implements ActionListener{
 	}
 
 	private void setup(){
-		this.setSize(350, 600);
+		this.setSize(350, 500);
 		this.setLocation(200, 150);
 		this.setTitle("BoredomKiller I");
 		this.setResizable(false);
@@ -129,50 +132,54 @@ public class MainView extends JFrame implements ActionListener{
 	private void setupMainPanel(){
 		mainPanel.setLayout(lm);
 		setupFilterPanel();
-		addComponent(mainPanel, filterPanel, 0, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 1);
+		addComponent(mainPanel, filterPanel, 0, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 1);
 		setupMiscPanel();
-		addComponent(mainPanel, miscPanel, 0, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
-		addComponent(mainPanel, killButton, 0, 2, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.NONE, 1);
+		addComponent(mainPanel, miscPanel, 0, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 1);
+		addComponent(mainPanel, killButton, 0, 2, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 	}
 	
 	private void setupFilterPanel(){
 		filterPanel.setLayout(lm);
+		filterPanel.setBorder(new TitledBorder("Filters"));
 		//Player
-		addComponent(filterPanel, playersLabel, 0, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 1);
-		playerScrollPane.add(playerList);
+		addComponent(filterPanel, playersLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
+		//TODO remove sample data
+		playerList.setListData(new String[]{"Pincer", "Kero", "Myrion", "Amorpheus", "Tschoppi"});
 		addComponent(filterPanel, playerScrollPane, 1, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
 		addComponent(filterPanel, playerAdd, 2, 1, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		addComponent(filterPanel, playerRemove, 2, 2, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		//Modus
-		addComponent(filterPanel, modusLabel, 0, 3, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 1);
+		addComponent(filterPanel, modusLabel, 0, 3, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		addComponent(filterPanel, cbSingleplayer, 1, 3, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
 		addComponent(filterPanel, cbVersus, 1, 4, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
 		addComponent(filterPanel, cbCoop, 1, 5, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
 		//Genre
-		addComponent(filterPanel, genreLabel, 0, 6, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 1);
-		genreScrollPane.add(cb1);
-		genreScrollPane.add(cb2);
-		genreScrollPane.add(cb3);
-		genreScrollPane.add(cb4);
-		genreScrollPane.add(cb5);
-		genreScrollPane.add(cb6);
-		genreScrollPane.add(cb7);
-		genreScrollPane.add(cb8);
-		genreScrollPane.add(cb9);
+		addComponent(filterPanel, genreLabel, 0, 6, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
+		genrePanel.setLayout(new BoxLayout(genrePanel, BoxLayout.PAGE_AXIS));
+		genrePanel.add(cb1);
+		genrePanel.add(cb2);
+		genrePanel.add(cb3);
+		genrePanel.add(cb4);
+		genrePanel.add(cb5);
+		genrePanel.add(cb6);
+		genrePanel.add(cb7);
+		genrePanel.add(cb8);
+		genrePanel.add(cb9);
 		addComponent(filterPanel, genreScrollPane, 1, 6, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
 		addComponent(filterPanel, genreCheck, 2, 7, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		addComponent(filterPanel, genreUncheck, 2, 8, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		//Platform
-		addComponent(filterPanel, platformLabel, 0, 9, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 1);
-		platformScrollPane.add(cbA);
-		platformScrollPane.add(cbB);
-		platformScrollPane.add(cbC);
-		platformScrollPane.add(cbD);
-		platformScrollPane.add(cbE);
-		platformScrollPane.add(cbF);
-		platformScrollPane.add(cbG);
-		platformScrollPane.add(cbH);
-		platformScrollPane.add(cbI);
+		addComponent(filterPanel, platformLabel, 0, 9, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
+		platformPanel.setLayout(new BoxLayout(platformPanel, BoxLayout.PAGE_AXIS));
+		platformPanel.add(cbA);
+		platformPanel.add(cbB);
+		platformPanel.add(cbC);
+		platformPanel.add(cbD);
+		platformPanel.add(cbE);
+		platformPanel.add(cbF);
+		platformPanel.add(cbG);
+		platformPanel.add(cbH);
+		platformPanel.add(cbI);
 		addComponent(filterPanel, platformScrollPane, 1, 9, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
 		addComponent(filterPanel, platformCheck, 2, 10, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		addComponent(filterPanel, platformUncheck, 2, 11, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
@@ -180,13 +187,14 @@ public class MainView extends JFrame implements ActionListener{
 	
 	private void setupMiscPanel(){
 		miscPanel.setLayout(lm);
+		miscPanel.setBorder(new TitledBorder("Misc"));
 		
-		addComponent(miscPanel, challengeLabel, 0, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 1);
-		addComponent(miscPanel, cbEasy, 1, 0, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		addComponent(miscPanel, challengeLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
+		addComponent(miscPanel, cbEasy, 1, 0, 1.0, 1.0, GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, 1);
 		addComponent(miscPanel, cbMedium, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
-		addComponent(miscPanel, cbHard, 1, 2, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		addComponent(miscPanel, cbHard, 1, 2, 1.0, 1.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, 1);
 		
-		addComponent(miscPanel, malusLabel, 0, 3, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.NONE, 1);
+		addComponent(miscPanel, malusLabel, 0, 3, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, 1);
 		addComponent(miscPanel, cbMalus, 1, 3, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
 	}
 	
