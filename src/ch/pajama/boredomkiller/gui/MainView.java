@@ -15,6 +15,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -68,6 +69,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private JScrollPane genreScrollPane = new JScrollPane(genrePanel);
 	private JButton genreCheck = new JButton("Check All");
 	private JButton genreUncheck = new JButton("Uncheck All");
+	private ArrayList<JCheckBox> genreListData = new ArrayList<JCheckBox>();
 	//Placeholders
 	//TODO delete those
 	private JCheckBox cb1 = new JCheckBox("Genre 1");
@@ -86,6 +88,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private JScrollPane platformScrollPane = new JScrollPane(platformPanel);
 	private JButton platformCheck = new JButton("Check All");
 	private JButton platformUncheck = new JButton("Uncheck All");
+	private ArrayList<JCheckBox> platformListData = new ArrayList<JCheckBox>();
 	//Placeholders
 	//TODO delete those
 	private JCheckBox cbA = new JCheckBox("Platform 1");
@@ -180,32 +183,48 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		//Genre
 		addComponent(filterPanel, genreLabel, 0, 6, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		genrePanel.setLayout(new BoxLayout(genrePanel, BoxLayout.PAGE_AXIS));
-		genrePanel.add(cb1);
-		genrePanel.add(cb2);
-		genrePanel.add(cb3);
-		genrePanel.add(cb4);
-		genrePanel.add(cb5);
-		genrePanel.add(cb6);
-		genrePanel.add(cb7);
-		genrePanel.add(cb8);
-		genrePanel.add(cb9);
+		genreListData.add(cb1);
+		genreListData.add(cb2);
+		genreListData.add(cb3);
+		genreListData.add(cb4);
+		genreListData.add(cb5);
+		genreListData.add(cb6);
+		genreListData.add(cb7);
+		genreListData.add(cb8);
+		genreListData.add(cb9);
+		
+		Iterator i = genreListData.iterator();
+		while(i.hasNext()){
+			genrePanel.add((Component)i.next());
+		}
+		
 		addComponent(filterPanel, genreScrollPane, 1, 6, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
+		genreCheck.addActionListener(this);
 		addComponent(filterPanel, genreCheck, 2, 7, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
+		genreUncheck.addActionListener(this);
 		addComponent(filterPanel, genreUncheck, 2, 8, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		//Platform
 		addComponent(filterPanel, platformLabel, 0, 9, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		platformPanel.setLayout(new BoxLayout(platformPanel, BoxLayout.PAGE_AXIS));
-		platformPanel.add(cbA);
-		platformPanel.add(cbB);
-		platformPanel.add(cbC);
-		platformPanel.add(cbD);
-		platformPanel.add(cbE);
-		platformPanel.add(cbF);
-		platformPanel.add(cbG);
-		platformPanel.add(cbH);
-		platformPanel.add(cbI);
+		platformListData.add(cbA);
+		platformListData.add(cbB);
+		platformListData.add(cbC);
+		platformListData.add(cbD);
+		platformListData.add(cbE);
+		platformListData.add(cbF);
+		platformListData.add(cbG);
+		platformListData.add(cbH);
+		platformListData.add(cbI);
+		
+		i = platformListData.iterator();
+		while(i.hasNext()){
+			platformPanel.add((Component)i.next());
+		}
+		
 		addComponent(filterPanel, platformScrollPane, 1, 9, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
+		platformCheck.addActionListener(this);
 		addComponent(filterPanel, platformCheck, 2, 10, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
+		platformUncheck.addActionListener(this);
 		addComponent(filterPanel, platformUncheck, 2, 11, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 	}
 	
@@ -313,6 +332,26 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		} else if (ae.getSource().equals(newPlayerCancel)){
 			newPlayer.setVisible(false);
 			newPlayerTf.setText("");
+		} else if (ae.getSource().equals(genreCheck)){
+			Iterator i = genreListData.iterator();
+			while(i.hasNext()){
+				((JCheckBox)i.next()).setSelected(true);
+			}
+		} else if (ae.getSource().equals(genreUncheck)){
+			Iterator i = genreListData.iterator();
+			while(i.hasNext()){
+				((JCheckBox)i.next()).setSelected(false);
+			}
+		} else if (ae.getSource().equals(platformCheck)){
+			Iterator i = platformListData.iterator();
+			while(i.hasNext()){
+				((JCheckBox)i.next()).setSelected(true);
+			}
+		} else if (ae.getSource().equals(platformUncheck)){
+			Iterator i = platformListData.iterator();
+			while(i.hasNext()){
+				((JCheckBox)i.next()).setSelected(false);
+			}
 		}
 	}
 
