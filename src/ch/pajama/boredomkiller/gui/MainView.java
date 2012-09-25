@@ -4,28 +4,35 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
 
-public class MainView extends JFrame implements ActionListener{
+public class MainView extends JFrame implements ActionListener, MouseListener{
 
 	//GridBagLayout
 	private LayoutManager lm = new GridBagLayout();
@@ -43,6 +50,7 @@ public class MainView extends JFrame implements ActionListener{
 	//Players stuff
 	private JLabel playersLabel = new JLabel("Players");
 	private JPanel playerListPanel = new JPanel();
+	private ArrayList<String> playerListData = new ArrayList<String>();
 	private JList playerList = new JList();
 	private JScrollPane playerScrollPane = new JScrollPane(playerList);
 	private JButton playerAdd = new JButton("Add");
@@ -96,8 +104,17 @@ public class MainView extends JFrame implements ActionListener{
 	private JCheckBox cbMedium = new JCheckBox("Medium");
 	private JCheckBox cbHard = new JCheckBox("Hard");
 	
+	private JLabel challengeSettingLabel = new JLabel("Challenge Setting");
+	private JComboBox<String> challengeSettingCb = new JComboBox<String>(new String[]{"Globally", "Individually"});
+	
 	private JLabel malusLabel = new JLabel("Malus Enabled");
 	private JCheckBox cbMalus = new JCheckBox();
+	
+	//Dialog to add a Player
+	private JDialog newPlayer = new JDialog(this);
+	private JTextField newPlayerTf = new JTextField();
+	private JButton newPlayerOk = new JButton(" Let's a go! ");
+	private JButton newPlayerCancel = new JButton(" Cancel ");
 	
 	public MainView(){
 		setup();
@@ -144,9 +161,16 @@ public class MainView extends JFrame implements ActionListener{
 		//Player
 		addComponent(filterPanel, playersLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		//TODO remove sample data
-		playerList.setListData(new String[]{"Pincer", "Kero", "Myrion", "Amorpheus", "Tschoppi"});
+		playerListData.add("Pincer");
+		playerListData.add("Kero");
+		playerListData.add("Myrion");
+		playerListData.add("Tschoppi");
+		playerListData.add("Amorpheus");
+		playerList.setListData(playerListData.toArray());
 		addComponent(filterPanel, playerScrollPane, 1, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
+		playerAdd.addActionListener(this);
 		addComponent(filterPanel, playerAdd, 2, 1, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
+		playerRemove.addActionListener(this);
 		addComponent(filterPanel, playerRemove, 2, 2, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		//Modus
 		addComponent(filterPanel, modusLabel, 0, 3, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
@@ -194,8 +218,11 @@ public class MainView extends JFrame implements ActionListener{
 		addComponent(miscPanel, cbMedium, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
 		addComponent(miscPanel, cbHard, 1, 2, 1.0, 1.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, 1);
 		
-		addComponent(miscPanel, malusLabel, 0, 3, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, 1);
-		addComponent(miscPanel, cbMalus, 1, 3, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		addComponent(miscPanel, challengeSettingLabel, 0, 3, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
+		addComponent(miscPanel, challengeSettingCb, 1, 3, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		
+		addComponent(miscPanel, malusLabel, 0, 4, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, 1);
+		addComponent(miscPanel, cbMalus, 1, 4, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
 	}
 	
 	/**
@@ -210,6 +237,32 @@ public class MainView extends JFrame implements ActionListener{
 	 * @param fill how the Component fills
 	 * @param gridheight sets the Components height
 	 */
+	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, int gridheight, int gridwidth){
+		c.gridx = gridx;
+		c.gridy = gridy;
+		c.weightx = weightx;
+		c.weighty = weighty;
+		c.anchor = anchor;
+		c.fill = fill;
+		c.gridheight = gridheight;
+		c.gridwidth = gridwidth;
+		
+		con.add(toadd, c);
+	}
+	
+	/**
+	 * Adds a Component to given Container
+	 * @param con Container to add the Component to
+	 * @param toadd Component to add
+	 * @param gridx where to add the Component on the x-axis
+	 * @param gridy	where to add the Component on the y-axis
+	 * @param weightx weight of the Component on the x-axis
+	 * @param weighty weight of the Component on the y-axis
+	 * @param anchor where the anchor is set for the Component
+	 * @param fill how the Component fills
+	 * @param gridheight sets the Components height
+	 * @param gridwidth sets the Components width
+	 */
 	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, int gridheight){
 		c.gridx = gridx;
 		c.gridy = gridy;
@@ -223,7 +276,74 @@ public class MainView extends JFrame implements ActionListener{
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent ae) {
+		if(ae.getSource().equals(playerAdd)){
+			newPlayer.setSize(300, 100);
+			newPlayer.setLocation(280, 250);
+			newPlayer.setTitle("A Challenger has appeared!");
+			newPlayer.setResizable(false);
+			newPlayer.setModal(true);
+			newPlayer.setLayout(lm);
+
+			newPlayerCancel.addMouseListener(this);
+			newPlayerCancel.addActionListener(this);
+			newPlayerOk.addActionListener(this);
+			
+			addComponent(newPlayer, newPlayerTf, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 1, 2);
+			addComponent(newPlayer, newPlayerOk, 0, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1, 1);
+			addComponent(newPlayer, newPlayerCancel, 1, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1, 1);
+			
+			newPlayer.setVisible(true);
+		} else if (ae.getSource().equals(playerRemove)){
+			if(playerList.getSelectedIndex() != -1){
+				playerListData.remove(playerList.getSelectedIndex());
+				playerList.setListData(playerListData.toArray());
+			}
+		} else if (ae.getSource().equals(newPlayerOk)){
+			String playername = newPlayerTf.getText();
+			if(!playername.equals("") && !playerListData.contains(playername)){
+				playerListData.add(playername);
+				playerList.setListData(playerListData.toArray());
+				newPlayer.setVisible(false);
+				newPlayerTf.setText("");
+			}
+			else{
+				System.out.println("Can't let you do that, maggot!");
+			}
+		} else if (ae.getSource().equals(newPlayerCancel)){
+			newPlayer.setVisible(false);
+			newPlayerTf.setText("");
+		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent me) {
+		if(me.getSource().equals(newPlayerCancel)){
+			newPlayerCancel.setText(" YOU PUSSY! ");
+		}
+	}
+
+	@Override
+	public void mouseExited(MouseEvent me) {
+		if(me.getSource().equals(newPlayerCancel)){
+			newPlayerCancel.setText(" Cancel ");
+		}
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
