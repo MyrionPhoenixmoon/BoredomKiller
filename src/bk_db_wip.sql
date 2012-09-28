@@ -19,8 +19,8 @@ create database if not exists boredomkiller;
 -- Statistics table
 create table if not exists tbl_statistics (
     id int not null auto_increment,
-    times_played int,
-    total_playtime int,
+    times_played int default 0,
+    total_playtime int default 0,
     primary key (id)
 );
 
@@ -58,7 +58,7 @@ create table if not exists tbl_maluses (
 create table if not exists tbl_players (
     id int not null auto_increment,
     name varchar(20) not null,
-    id_statistic int,
+    id_statistic int not null,
     primary key (id),
     foreign key (id_statistic) references tbl_statistics (id)
 );
