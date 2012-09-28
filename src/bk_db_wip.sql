@@ -3,11 +3,15 @@
 -- Warning:  This .sql file has not been tested yet.
 --
 -- Author: Patrick Manser
-----------------------------------------------------
-------------------- Change log ---------------------
-----------------------------------------------------
+-- --------------------------------------------------
+-- ----------------- Change log ---------------------
+-- --------------------------------------------------
+-- 28.09.12 - V0.1 - Added the create database command
 -- 28.09.12 - V0.1 - Added relations (pm)
 -- 28.09.12 - V0.1 - Created all main tables (pm)
+
+-- Create the database if it doesn't exist already
+create database if not exists boredomkiller;
 
 -- Games table
 create table if not exists tbl_games (
