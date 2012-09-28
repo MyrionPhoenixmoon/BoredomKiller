@@ -1,4 +1,4 @@
--- BoredomKiller Database V0.1
+-- BoredomKiller Database V0.2
 --
 -- Warning:  This .sql file has not been tested yet.
 --
@@ -6,8 +6,8 @@
 -- --------------------------------------------------
 -- ----------------- Change log ---------------------
 -- --------------------------------------------------
--- 28.09.12 - V0.2 - Changed some primary keys to foreign keys
--- 28.09.12 - V0.1 - Added the create database command
+-- 28.09.12 - V0.2 - Changed some primary keys to foreign keys (pm)
+-- 28.09.12 - V0.1 - Added the create database command (pm)
 -- 28.09.12 - V0.1 - Added relations (pm)
 -- 28.09.12 - V0.1 - Created all main tables (pm)
 
