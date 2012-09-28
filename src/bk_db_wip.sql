@@ -6,8 +6,8 @@
 ----------------------------------------------------
 ------------------- Change log ---------------------
 ----------------------------------------------------
--- 28.09.12 - V0.1 - Added relations
--- 28.09.12 - V0.1 - Created all main tables
+-- 28.09.12 - V0.1 - Added relations (pm)
+-- 28.09.12 - V0.1 - Created all main tables (pm)
 
 -- Games table
 create table if not exists tbl_games (
