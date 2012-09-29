@@ -16,6 +16,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Properties;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -32,6 +33,9 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.TitledBorder;
+import javax.swing.plaf.PanelUI;
+
+import com.jtattoo.plaf.smart.SmartLookAndFeel;
 
 public class MainView extends JFrame implements ActionListener, MouseListener{
 
@@ -127,6 +131,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		setupTheme();
 		new MainView();
 	}
 
@@ -135,6 +140,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		this.setLocation(200, 150);
 		this.setTitle("BoredomKiller I");
 		this.setResizable(false);
+		//this.setUndecorated(true);
 		
 		this.add(mainPanel);
 		setupMainPanel();
@@ -242,6 +248,14 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		
 		addComponent(miscPanel, malusLabel, 0, 4, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, 1);
 		addComponent(miscPanel, cbMalus, 1, 4, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+	}
+	
+	private static void setupTheme(){
+		try {
+	        javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**
