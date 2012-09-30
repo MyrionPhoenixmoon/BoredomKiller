@@ -32,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.PanelUI;
 
@@ -166,7 +167,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	
 	private void setupFilterPanel(){
 		filterPanel.setLayout(lm);
-		filterPanel.setBorder(new TitledBorder("Filters"));
+		filterPanel.setBorder(new TitledBorder(new LineBorder(new Color(150, 150, 150)), "Filters"));
 		//Player
 		addComponent(filterPanel, playersLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		//TODO remove sample data
@@ -176,6 +177,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		playerListData.add("Tschoppi");
 		playerListData.add("Amorpheus");
 		playerList.setListData(playerListData.toArray());
+		playerScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
 		addComponent(filterPanel, playerScrollPane, 1, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
 		playerAdd.addActionListener(this);
 		addComponent(filterPanel, playerAdd, 2, 1, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
@@ -204,6 +206,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			genrePanel.add((Component)i.next());
 		}
 		
+		genreScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
 		addComponent(filterPanel, genreScrollPane, 1, 6, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
 		genreCheck.addActionListener(this);
 		addComponent(filterPanel, genreCheck, 2, 7, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
@@ -227,6 +230,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			platformPanel.add((Component)i.next());
 		}
 		
+		platformScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
 		addComponent(filterPanel, platformScrollPane, 1, 9, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
 		platformCheck.addActionListener(this);
 		addComponent(filterPanel, platformCheck, 2, 10, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
@@ -236,7 +240,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	
 	private void setupMiscPanel(){
 		miscPanel.setLayout(lm);
-		miscPanel.setBorder(new TitledBorder("Misc"));
+		miscPanel.setBorder(new TitledBorder(new LineBorder(new Color(150, 150, 150)), "Misc"));
 		
 		addComponent(miscPanel, challengeLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		addComponent(miscPanel, cbEasy, 1, 0, 1.0, 1.0, GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, 1);
@@ -252,6 +256,8 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	
 	private static void setupTheme(){
 		try {
+			
+			
 	        javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
