@@ -1,12 +1,14 @@
 package ch.pajama.boredomkiller.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dialog;
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,9 +16,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Properties;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,16 +29,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.plaf.PanelUI;
-
-import com.jtattoo.plaf.smart.SmartLookAndFeel;
 
 public class MainView extends JFrame implements ActionListener, MouseListener{
 
@@ -51,11 +49,11 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private JPanel filterPanel = new JPanel();
 	private JPanel miscPanel = new JPanel();
 	private JButton killButton = new JButton("Kill the Boredom!!");
+	private RainbowHover rh;
 	
 	//filterPanel contents
 	//Players stuff
 	private JLabel playersLabel = new JLabel("Players");
-	private JPanel playerListPanel = new JPanel();
 	private ArrayList<String> playerListData = new ArrayList<String>();
 	private JList playerList = new JList();
 	private JScrollPane playerScrollPane = new JScrollPane(playerList);
@@ -137,11 +135,13 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	}
 
 	private void setup(){
-		this.setSize(350, 500);
+		this.setSize(350, 600);
 		this.setLocation(200, 150);
 		this.setTitle("BoredomKiller I");
 		this.setResizable(false);
-		//this.setUndecorated(true);
+		Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
+		this.setIconImage(icon);
+
 		
 		this.add(mainPanel);
 		setupMainPanel();
@@ -159,9 +159,12 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private void setupMainPanel(){
 		mainPanel.setLayout(lm);
 		setupFilterPanel();
-		addComponent(mainPanel, filterPanel, 0, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 1);
+		addComponent(mainPanel, filterPanel, 0, 0, 1.0, 8.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 1);
 		setupMiscPanel();
-		addComponent(mainPanel, miscPanel, 0, 1, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 1);
+		addComponent(mainPanel, miscPanel, 0, 1, 1.0, 2.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 1);
+		killButton.setBackground(new Color(40, 40, 40));
+		killButton.setForeground(new Color(255, 255, 255));
+		killButton.addMouseListener(this);
 		addComponent(mainPanel, killButton, 0, 2, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 	}
 	
@@ -169,6 +172,8 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		filterPanel.setLayout(lm);
 		filterPanel.setBorder(new TitledBorder(new LineBorder(new Color(150, 150, 150)), "Filters"));
 		//Player
+		Color playerColor = new Color(150, 200, 255);
+		playersLabel.setForeground(playerColor);
 		addComponent(filterPanel, playersLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		//TODO remove sample data
 		playerListData.add("Pincer");
@@ -176,19 +181,31 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		playerListData.add("Myrion");
 		playerListData.add("Tschoppi");
 		playerListData.add("Amorpheus");
+		playerList.setForeground(playerColor);
 		playerList.setListData(playerListData.toArray());
 		playerScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
-		addComponent(filterPanel, playerScrollPane, 1, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
+		addComponent(filterPanel, playerScrollPane, 1, 0, 1.0, 10.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 3);
 		playerAdd.addActionListener(this);
+		playerAdd.setBackground(playerColor);
+		playerAdd.setForeground(new Color(0, 50, 100));
 		addComponent(filterPanel, playerAdd, 2, 1, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		playerRemove.addActionListener(this);
+		playerRemove.setBackground(playerColor);
+		playerRemove.setForeground(new Color(0, 50, 100));
 		addComponent(filterPanel, playerRemove, 2, 2, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		//Modus
+		Color modusColor = new Color(220, 170, 255);
+		modusLabel.setForeground(modusColor);
 		addComponent(filterPanel, modusLabel, 0, 3, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
+		cbSingleplayer.setForeground(modusColor);
 		addComponent(filterPanel, cbSingleplayer, 1, 3, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		cbVersus.setForeground(modusColor);
 		addComponent(filterPanel, cbVersus, 1, 4, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		cbCoop.setForeground(modusColor);
 		addComponent(filterPanel, cbCoop, 1, 5, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
 		//Genre
+		Color genreColor = new Color(255, 150, 200);
+		genreLabel.setForeground(genreColor);
 		addComponent(filterPanel, genreLabel, 0, 6, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		genrePanel.setLayout(new BoxLayout(genrePanel, BoxLayout.PAGE_AXIS));
 		genreListData.add(cb1);
@@ -201,18 +218,26 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		genreListData.add(cb8);
 		genreListData.add(cb9);
 		
-		Iterator i = genreListData.iterator();
+		Iterator<JCheckBox> i = genreListData.iterator();
 		while(i.hasNext()){
-			genrePanel.add((Component)i.next());
+			JCheckBox tmp = i.next();
+			tmp.setForeground(genreColor);
+			genrePanel.add(tmp);
 		}
 		
 		genreScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
-		addComponent(filterPanel, genreScrollPane, 1, 6, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
+		addComponent(filterPanel, genreScrollPane, 1, 6, 1.0, 10.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 3);
 		genreCheck.addActionListener(this);
+		genreCheck.setBackground(genreColor);
+		genreCheck.setForeground(new Color(100, 0, 50));
 		addComponent(filterPanel, genreCheck, 2, 7, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		genreUncheck.addActionListener(this);
+		genreUncheck.setBackground(genreColor);
+		genreUncheck.setForeground(new Color(100, 0, 50));
 		addComponent(filterPanel, genreUncheck, 2, 8, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		//Platform
+		Color platformColor = new Color(255, 200, 150);
+		platformLabel.setForeground(platformColor);
 		addComponent(filterPanel, platformLabel, 0, 9, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		platformPanel.setLayout(new BoxLayout(platformPanel, BoxLayout.PAGE_AXIS));
 		platformListData.add(cbA);
@@ -227,14 +252,20 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		
 		i = platformListData.iterator();
 		while(i.hasNext()){
-			platformPanel.add((Component)i.next());
+			JCheckBox tmp = i.next();
+			tmp.setForeground(platformColor);
+			platformPanel.add(tmp);
 		}
 		
 		platformScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
-		addComponent(filterPanel, platformScrollPane, 1, 9, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 3);
+		addComponent(filterPanel, platformScrollPane, 1, 9, 1.0, 10.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 3);
 		platformCheck.addActionListener(this);
+		platformCheck.setBackground(platformColor);
+		platformCheck.setForeground(new Color(100, 50, 0));
 		addComponent(filterPanel, platformCheck, 2, 10, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		platformUncheck.addActionListener(this);
+		platformUncheck.setBackground(platformColor);
+		platformUncheck.setForeground(new Color(100, 50, 0));
 		addComponent(filterPanel, platformUncheck, 2, 11, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 	}
 	
@@ -242,23 +273,29 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		miscPanel.setLayout(lm);
 		miscPanel.setBorder(new TitledBorder(new LineBorder(new Color(150, 150, 150)), "Misc"));
 		
-		addComponent(miscPanel, challengeLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
+		Color challengeColor = new Color(255, 255, 150);
+		challengeLabel.setForeground(challengeColor);
+		addComponent(miscPanel, challengeLabel, 0, 0, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(0, 0, 0, 10), 1);
+		cbEasy.setForeground(challengeColor);
 		addComponent(miscPanel, cbEasy, 1, 0, 1.0, 1.0, GridBagConstraints.SOUTHWEST, GridBagConstraints.NONE, 1);
+		cbMedium.setForeground(new Color(255, 205, 150));
 		addComponent(miscPanel, cbMedium, 1, 1, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		cbHard.setForeground(new Color(255, 155, 150));
 		addComponent(miscPanel, cbHard, 1, 2, 1.0, 1.0, GridBagConstraints.NORTHWEST, GridBagConstraints.NONE, 1);
 		
-		addComponent(miscPanel, challengeSettingLabel, 0, 3, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
-		addComponent(miscPanel, challengeSettingCb, 1, 3, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		challengeSettingLabel.setForeground(challengeColor);
+		addComponent(miscPanel, challengeSettingLabel, 0, 3, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 0, 0, 10), 1);
+		challengeSettingCb.setForeground(challengeColor);
+		addComponent(miscPanel, challengeSettingCb, 1, 3, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 1);
 		
-		addComponent(miscPanel, malusLabel, 0, 4, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, 1);
-		addComponent(miscPanel, cbMalus, 1, 4, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, 1);
+		malusLabel.setForeground(challengeColor);
+		addComponent(miscPanel, malusLabel, 0, 4, 1.0, 1.0, GridBagConstraints.EAST, GridBagConstraints.NONE, new Insets(5, 0, 0, 10), 1);
+		addComponent(miscPanel, cbMalus, 1, 4, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.NONE, new Insets(5, 0, 0, 0), 1);
 	}
 	
 	private static void setupTheme(){
 		try {
-			
-			
-	        javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.noire.NoireLookAndFeel");
+	        javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -286,6 +323,34 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		c.gridheight = gridheight;
 		c.gridwidth = gridwidth;
 		
+		c.insets = new Insets(0, 0, 0, 0);
+		
+		con.add(toadd, c);
+	}
+	
+	/**
+	 * Adds a Component to given Container
+	 * @param con Container to add the Component to
+	 * @param toadd Component to add
+	 * @param gridx where to add the Component on the x-axis
+	 * @param gridy	where to add the Component on the y-axis
+	 * @param weightx weight of the Component on the x-axis
+	 * @param weighty weight of the Component on the y-axis
+	 * @param anchor where the anchor is set for the Component
+	 * @param fill how the Component fills
+	 * @param gridheight sets the Components height
+	 * @param gridwidth sets the Components width
+	 */
+	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, Insets insets, int gridheight){
+		c.gridx = gridx;
+		c.gridy = gridy;
+		c.weightx = weightx;
+		c.weighty = weighty;
+		c.anchor = anchor;
+		c.fill = fill;
+		c.insets = insets;
+		c.gridheight = gridheight;
+		
 		con.add(toadd, c);
 	}
 	
@@ -310,6 +375,9 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		c.anchor = anchor;
 		c.fill = fill;
 		c.gridheight = gridheight;
+		
+		c.insets = new Insets(0, 0, 0, 0);
+		c.gridwidth = 1;
 		
 		con.add(toadd, c);
 	}
@@ -353,24 +421,24 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			newPlayer.setVisible(false);
 			newPlayerTf.setText("");
 		} else if (ae.getSource().equals(genreCheck)){
-			Iterator i = genreListData.iterator();
+			Iterator<JCheckBox> i = genreListData.iterator();
 			while(i.hasNext()){
-				((JCheckBox)i.next()).setSelected(true);
+				i.next().setSelected(true);
 			}
 		} else if (ae.getSource().equals(genreUncheck)){
-			Iterator i = genreListData.iterator();
+			Iterator<JCheckBox> i = genreListData.iterator();
 			while(i.hasNext()){
-				((JCheckBox)i.next()).setSelected(false);
+				i.next().setSelected(false);
 			}
 		} else if (ae.getSource().equals(platformCheck)){
-			Iterator i = platformListData.iterator();
+			Iterator<JCheckBox> i = platformListData.iterator();
 			while(i.hasNext()){
-				((JCheckBox)i.next()).setSelected(true);
+				i.next().setSelected(true);
 			}
 		} else if (ae.getSource().equals(platformUncheck)){
-			Iterator i = platformListData.iterator();
+			Iterator<JCheckBox> i = platformListData.iterator();
 			while(i.hasNext()){
-				((JCheckBox)i.next()).setSelected(false);
+				i.next().setSelected(false);
 			}
 		}
 	}
@@ -380,11 +448,17 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent me) {
 		if(me.getSource().equals(newPlayerCancel)){
 			newPlayerCancel.setText(" YOU PUSSY! ");
+		}
+		if(me.getSource().equals(killButton)){
+			if(rh == null){
+				 rh = new RainbowHover();
+			}
+			rh.go();
 		}
 	}
 
@@ -392,6 +466,11 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	public void mouseExited(MouseEvent me) {
 		if(me.getSource().equals(newPlayerCancel)){
 			newPlayerCancel.setText(" Cancel ");
+		}
+		if(me.getSource().equals(killButton)){
+			rh.halt();
+			killButton.setBackground(new Color(40, 40, 40));
+			killButton.setForeground(new Color(255, 255, 255));
 		}
 	}
 
@@ -406,5 +485,97 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	private class RainbowHover extends Thread{
+		private boolean on = false;
+		private int red = 200;
+		private int green = 100;
+		private int blue = 0;
+		boolean redup = false;
+		boolean greenup = true;
+		boolean blueup = true;
+		
+		public RainbowHover(){
+			start();
+		}
+		
+		public void go(){
+			on = true;
+		}
+		
+		public void halt() {
+	        on = false;
+	        red = 200;
+	        green = 100;
+	        blue = 0;
+	        redup = false;
+	        greenup = true;
+	        blueup = true;
+	    }
+		
+		public void run(){
+			while(true){
+				if(on){
+					if(red == 0){
+						redup = true;
+					}
+					else if(red == 200){
+						redup = false;
+					}
+					
+					if(green == 0){
+						greenup = true;
+					}
+					else if(green == 200){
+						greenup = false;
+					}
+					
+					if(blue == 0){
+						blueup = true;
+					}
+					else if(blue == 200){
+						blueup = false;
+					}
+					
+					if(redup){
+						red++;
+					}
+					else{
+						red--;
+					}
+					
+					if(greenup){
+						green++;
+					}
+					else{
+						green--;
+					}
+					
+					if(blueup){
+						blue++;
+					}
+					else{
+						blue--;
+					}
+					
+					killButton.setBackground(new Color(red, green, blue));
+					killButton.setForeground(new Color(255-red, 255-green, 255-blue));
+					try{
+						sleep(2);
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+				else{
+					try{
+						sleep(2);
+					}
+					catch(Exception e){
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+	}
 }
