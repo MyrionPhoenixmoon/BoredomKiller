@@ -385,8 +385,9 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource().equals(playerAdd)){
+			//TODO Colour Scheme
 			newPlayer.setSize(300, 100);
-			newPlayer.setLocation(280, 250);
+			newPlayer.setLocation(this.getLocation().x + 20, this.getLocation().y + 120);
 			newPlayer.setTitle("A Challenger has appeared!");
 			newPlayer.setResizable(false);
 			newPlayer.setModal(true);
