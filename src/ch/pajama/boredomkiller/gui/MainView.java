@@ -19,6 +19,7 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Properties;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -139,6 +140,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		this.setLocation(200, 150);
 		this.setTitle("BoredomKiller I");
 		this.setResizable(false);
+		//TODO Design Icon
 		Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
 		this.setIconImage(icon);
 
@@ -295,6 +297,8 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	
 	private static void setupTheme(){
 		try {
+			//TODO adjust Theme (Dialog Box / ScrollPanes)
+			
 	        javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -385,12 +389,17 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource().equals(playerAdd)){
-			//TODO Colour Scheme
 			newPlayer.setSize(300, 100);
 			newPlayer.setLocation(this.getLocation().x + 20, this.getLocation().y + 120);
 			newPlayer.setTitle("A Challenger has appeared!");
 			newPlayer.setResizable(false);
 			newPlayer.setModal(true);
+			Color newPlayerColor = new Color(150, 200, 255);
+			newPlayerOk.setBackground(newPlayerColor);
+			newPlayerTf.setForeground(newPlayerColor);
+			newPlayerOk.setForeground(new Color(0, 50, 100));
+			newPlayerCancel.setBackground(newPlayerColor);
+			newPlayerCancel.setForeground(new Color(0, 50, 100));
 			newPlayer.setLayout(lm);
 
 			newPlayerCancel.addMouseListener(this);
