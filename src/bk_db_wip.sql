@@ -67,8 +67,6 @@ create table if not exists tbl_players (
 create table if not exists tbl_games (
     id int not null auto_increment,
     name varchar(100) not null,
-    min_players int not null,
-    max_players int not null,
     theme_loc varchar(200),
     id_statistic int not null,
     id_platform int not null,
@@ -138,6 +136,8 @@ create table if not exists tbl_mode_has_playstyle (
 create table if not exists tbl_game_has_playstyle (
     id_game int not null,
     id_playstyle int not null,
+    min_players int not null,
+    max_players int not null,
     foreign key (id_game) references tbl_games (id),
     foreign key (id_playstyle) references tbl_playstyles (id)
 );
