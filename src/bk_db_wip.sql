@@ -11,10 +11,10 @@
 -- 28.09.12 - V0.1 - Added relations (pm)
 -- 28.09.12 - V0.1 - Created all main tables (pm)
 
--- Drop database and then create it
+-- Drop database, then create it and then use it
 drop database if exists boredomkiller;
 create database if not exists boredomkiller;
-
+use boredomkiller;
 
 -- Statistics table
 create table if not exists tbl_statistics (
@@ -122,33 +122,38 @@ create table if not exists tbl_maps (
 create table if not exists tbl_map_has_playstyle (
     id_map int not null,
     id_playstyle not null,
-    primary key (id_map, id_playstyle)
+    foreign key (id_map) references tbl_maps (id),
+    foreign key (id_playstyle) references tbl_playstyles (id)
 );
 
 -- Relation Mode - Playstyle
 create table if not exists tbl_mode_has_playstyle (
     id_mode int not null,
     id_playstyle int not null,
-    primary key (id_mode, id_playstyle)
+    foreign key (id_mode) references tbl_modes (id),
+    foreign key (id_playstyle) references tbl_playstyles (id)
 );
 
 -- Relation Game - Playstyle
 create table if not exists tbl_game_has_playstyle (
     id_game int not null,
     id_playstyle int not null,
-    primary key (id_game, id_playstyle)
+    foreign key (id_game) references tbl_games (id),
+    foreign key (id_playstyle) references tbl_playstyles (id)
 );
 
 -- Relation Game - Game type
 create table if not exists tbl_game_has_game_type (
     id_game int not null,
     id_game_type int not null,
-    primary key (id_game, id_game_type)
+    foreign key (id_game) references tbl_game (id),
+    foreign key (id_game_type) references tbl_game_types (id)
 );
 
 -- Relation Challenge - Playstyle
 create table if not exists tbl_challenge_has_playstyle (
     id_challenge int not null,
     id_playstyle int not null,
-    primary key (id_challenge, id_playstyle)
+    foreign key (id_challenge) references tbl_challenges (id),
+    foreign key (id_playstyle) references tbl_playstyles (id)
 );
