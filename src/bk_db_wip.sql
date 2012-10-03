@@ -121,7 +121,7 @@ create table if not exists tbl_maps (
 -- Relation Map - Playstyle
 create table if not exists tbl_map_has_playstyle (
     id_map int not null,
-    id_playstyle not null,
+    id_playstyle int not null,
     foreign key (id_map) references tbl_maps (id),
     foreign key (id_playstyle) references tbl_playstyles (id)
 );
@@ -146,7 +146,7 @@ create table if not exists tbl_game_has_playstyle (
 create table if not exists tbl_game_has_game_type (
     id_game int not null,
     id_game_type int not null,
-    foreign key (id_game) references tbl_game (id),
+    foreign key (id_game) references tbl_games (id),
     foreign key (id_game_type) references tbl_game_types (id)
 );
 
