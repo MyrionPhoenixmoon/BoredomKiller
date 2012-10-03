@@ -410,13 +410,10 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		} else if (ae.getSource().equals(newPlayerOk)){
 			String playername = newPlayerTf.getText();
 			if(!playername.equals("") && !playerListData.contains(playername)){
-				playerListData.add(playername);
+				playerListData.add(0, playername);
 				playerList.setListData(playerListData.toArray());
 				newPlayer.setVisible(false);
 				newPlayerTf.setText("");
-			}
-			else{
-				System.out.println("Can't let you do that, maggot!");
 			}
 		} else if (ae.getSource().equals(newPlayerCancel)){
 			newPlayer.setVisible(false);
