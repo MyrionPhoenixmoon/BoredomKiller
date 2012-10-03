@@ -164,7 +164,7 @@ INSERT INTO tbl_challenges SET name="Herp Derp Durr", description="Use your 'Bad
 INSERT INTO tbl_statistics SET times_played="0";
 INSERT INTO tbl_challenges SET name="Untouchable", description="Complete the first world, without dying.", id_difficulty="1", id_statistic="56", id_game="18";
 INSERT INTO tbl_statistics SET times_played="0";
-INSERT INTO tbl_challenges SET name="Godpeed", description="Finish the game within 2 hours.", id_difficulty="2", id_statistic="57", id_game="19";
+INSERT INTO tbl_challenges SET name="Godspeed", description="Finish the game within 2 hours.", id_difficulty="2", id_statistic="57", id_game="19";
 INSERT INTO tbl_statistics SET times_played="0";
 INSERT INTO tbl_challenges SET name="Godspeed", description="Finish the game within a week.", id_difficulty="2", id_statistic="58", id_game="20";
 INSERT INTO tbl_statistics SET times_played="0";
