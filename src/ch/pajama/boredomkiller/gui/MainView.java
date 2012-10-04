@@ -3,8 +3,6 @@ package ch.pajama.boredomkiller.gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Font;
-import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -19,8 +17,8 @@ import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Properties;
 
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -30,15 +28,19 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class MainView extends JFrame implements ActionListener, MouseListener{
+import ch.pajama.boredomkiller.db.Connector;
+import ch.pajama.boredomkiller.db.QueryHandler;
+import ch.pajama.boredomkiller.db.model.GameType;
+import ch.pajama.boredomkiller.db.model.Platform;
 
+public class MainView extends JFrame implements ActionListener, MouseListener{
+	private static final long serialVersionUID = 3413030932581242622L;
+	
 	//GridBagLayout
 	private LayoutManager lm = new GridBagLayout();
 	private GridBagConstraints c = new GridBagConstraints();
@@ -73,18 +75,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private JScrollPane genreScrollPane = new JScrollPane(genrePanel);
 	private JButton genreCheck = new JButton("Check All");
 	private JButton genreUncheck = new JButton("Uncheck All");
-	private ArrayList<JCheckBox> genreListData = new ArrayList<JCheckBox>();
-	//Placeholders
-	//TODO delete those
-	private JCheckBox cb1 = new JCheckBox("Genre 1");
-	private JCheckBox cb2 = new JCheckBox("Genre 2");
-	private JCheckBox cb3 = new JCheckBox("Genre 3");
-	private JCheckBox cb4 = new JCheckBox("Genre 4");
-	private JCheckBox cb5 = new JCheckBox("Genre 5");
-	private JCheckBox cb6 = new JCheckBox("Genre 6");
-	private JCheckBox cb7 = new JCheckBox("Genre 7");
-	private JCheckBox cb8 = new JCheckBox("Genre 8");
-	private JCheckBox cb9 = new JCheckBox("Genre 9");
+	private ArrayList<GameType> genreListData = new ArrayList<GameType>();
 	
 	//Platform stuff
 	private JLabel platformLabel = new JLabel("Platform");
@@ -92,18 +83,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private JScrollPane platformScrollPane = new JScrollPane(platformPanel);
 	private JButton platformCheck = new JButton("Check All");
 	private JButton platformUncheck = new JButton("Uncheck All");
-	private ArrayList<JCheckBox> platformListData = new ArrayList<JCheckBox>();
-	//Placeholders
-	//TODO delete those
-	private JCheckBox cbA = new JCheckBox("Platform 1");
-	private JCheckBox cbB = new JCheckBox("Platform 2");
-	private JCheckBox cbC = new JCheckBox("Platform 3");
-	private JCheckBox cbD = new JCheckBox("Platform 4");
-	private JCheckBox cbE = new JCheckBox("Platform 5");
-	private JCheckBox cbF = new JCheckBox("Platform 6");
-	private JCheckBox cbG = new JCheckBox("Platform 7");
-	private JCheckBox cbH = new JCheckBox("Platform 8");
-	private JCheckBox cbI = new JCheckBox("Platform 9");
+	private ArrayList<Platform> platformListData = new ArrayList<Platform>();
 	
 	//miscPanel contents
 	private JLabel challengeLabel = new JLabel("Challenge Difficulty");
@@ -123,13 +103,14 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private JButton newPlayerOk = new JButton(" Let's a go! ");
 	private JButton newPlayerCancel = new JButton(" Cancel ");
 	
+	// DB Stuff
+	Connector con = new Connector("root", "", "localhost", 3306);
+	QueryHandler qh = new QueryHandler(con.getConnection());
+	
 	public MainView(){
 		setup();
 	}
 	
-	/**
-	 * @param args
-	 */
 	public static void main(String[] args) {
 		setupTheme();
 		new MainView();
@@ -177,12 +158,6 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		Color playerColor = new Color(150, 200, 255);
 		playersLabel.setForeground(playerColor);
 		addComponent(filterPanel, playersLabel, 0, 0, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
-		//TODO remove sample data
-		playerListData.add("Pincer");
-		playerListData.add("Kero");
-		playerListData.add("Myrion");
-		playerListData.add("Tschoppi");
-		playerListData.add("Amorpheus");
 		playerList.setForeground(playerColor);
 		playerList.setListData(playerListData.toArray());
 		playerScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
@@ -210,19 +185,11 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		genreLabel.setForeground(genreColor);
 		addComponent(filterPanel, genreLabel, 0, 6, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		genrePanel.setLayout(new BoxLayout(genrePanel, BoxLayout.PAGE_AXIS));
-		genreListData.add(cb1);
-		genreListData.add(cb2);
-		genreListData.add(cb3);
-		genreListData.add(cb4);
-		genreListData.add(cb5);
-		genreListData.add(cb6);
-		genreListData.add(cb7);
-		genreListData.add(cb8);
-		genreListData.add(cb9);
 		
-		Iterator<JCheckBox> i = genreListData.iterator();
-		while(i.hasNext()){
-			JCheckBox tmp = i.next();
+		genreListData = qh.getGameTypes();
+		Iterator<GameType> igt = genreListData.iterator();
+		while(igt.hasNext()){
+			JCheckBox tmp = new JCheckBox(igt.next().getName());
 			tmp.setForeground(genreColor);
 			genrePanel.add(tmp);
 		}
@@ -242,19 +209,11 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		platformLabel.setForeground(platformColor);
 		addComponent(filterPanel, platformLabel, 0, 9, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
 		platformPanel.setLayout(new BoxLayout(platformPanel, BoxLayout.PAGE_AXIS));
-		platformListData.add(cbA);
-		platformListData.add(cbB);
-		platformListData.add(cbC);
-		platformListData.add(cbD);
-		platformListData.add(cbE);
-		platformListData.add(cbF);
-		platformListData.add(cbG);
-		platformListData.add(cbH);
-		platformListData.add(cbI);
+		platformListData = qh.getPlatforms();
 		
-		i = platformListData.iterator();
-		while(i.hasNext()){
-			JCheckBox tmp = i.next();
+		Iterator<Platform> ip = platformListData.iterator();
+		while(ip.hasNext()){
+			JCheckBox tmp = new JCheckBox(ip.next().getName());
 			tmp.setForeground(platformColor);
 			platformPanel.add(tmp);
 		}
@@ -389,6 +348,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource().equals(playerAdd)){
+			//TODO add Keylistener for Enter Key
 			newPlayer.setSize(300, 100);
 			newPlayer.setLocation(this.getLocation().x + 20, this.getLocation().y + 120);
 			newPlayer.setTitle("A Challenger has appeared!");
@@ -428,32 +388,31 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			newPlayer.setVisible(false);
 			newPlayerTf.setText("");
 		} else if (ae.getSource().equals(genreCheck)){
-			Iterator<JCheckBox> i = genreListData.iterator();
-			while(i.hasNext()){
-				i.next().setSelected(true);
+			Component[] cbs = genrePanel.getComponents();
+			for(int i = 0; i < cbs.length; i++){
+				((JCheckBox)cbs[i]).setSelected(true);
 			}
 		} else if (ae.getSource().equals(genreUncheck)){
-			Iterator<JCheckBox> i = genreListData.iterator();
-			while(i.hasNext()){
-				i.next().setSelected(false);
+			Component[] cbs = genrePanel.getComponents();
+			for(int i = 0; i < cbs.length; i++){
+				((JCheckBox)cbs[i]).setSelected(false);
 			}
 		} else if (ae.getSource().equals(platformCheck)){
-			Iterator<JCheckBox> i = platformListData.iterator();
-			while(i.hasNext()){
-				i.next().setSelected(true);
+			Component[] cbs = platformPanel.getComponents();
+			for(int i = 0; i < cbs.length; i++){
+				((JCheckBox)cbs[i]).setSelected(true);
 			}
 		} else if (ae.getSource().equals(platformUncheck)){
-			Iterator<JCheckBox> i = platformListData.iterator();
-			while(i.hasNext()){
-				i.next().setSelected(false);
+			Component[] cbs = platformPanel.getComponents();
+			for(int i = 0; i < cbs.length; i++){
+				((JCheckBox)cbs[i]).setSelected(false);
 			}
 		}
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		//nothing to do so far...
 	}
 	
 	@Override
@@ -483,14 +442,12 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		//nothing to do so far...
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		//nothing to do so far...
 	}
 	
 	private class RainbowHover extends Thread{
