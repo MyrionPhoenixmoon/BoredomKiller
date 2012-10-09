@@ -1,8 +1,11 @@
 package ch.pajama.boredomkiller.gui;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -184,14 +187,16 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		Color genreColor = new Color(255, 150, 200);
 		genreLabel.setForeground(genreColor);
 		addComponent(filterPanel, genreLabel, 0, 6, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
-		genrePanel.setLayout(new BoxLayout(genrePanel, BoxLayout.PAGE_AXIS));
+		genrePanel.setLayout(lm);
 		
 		genreListData = qh.getGameTypes();
 		Iterator<GameType> igt = genreListData.iterator();
+		int row = 0;
 		while(igt.hasNext()){
 			JCheckBox tmp = new JCheckBox(igt.next().getName());
 			tmp.setForeground(genreColor);
-			genrePanel.add(tmp);
+			addComponent(genrePanel, tmp, 0, row, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 1);
+			row++;
 		}
 		
 		genreScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
@@ -208,14 +213,17 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		Color platformColor = new Color(255, 200, 150);
 		platformLabel.setForeground(platformColor);
 		addComponent(filterPanel, platformLabel, 0, 9, 1.0, 1.0, GridBagConstraints.CENTER, GridBagConstraints.NONE, 1);
-		platformPanel.setLayout(new BoxLayout(platformPanel, BoxLayout.PAGE_AXIS));
-		platformListData = qh.getPlatforms();
+		platformPanel.setLayout(lm);
 		
+		
+		platformListData = qh.getPlatforms();
 		Iterator<Platform> ip = platformListData.iterator();
+		row = 0;
 		while(ip.hasNext()){
 			JCheckBox tmp = new JCheckBox(ip.next().getName());
 			tmp.setForeground(platformColor);
-			platformPanel.add(tmp);
+			addComponent(platformPanel, tmp, 0, row, 1.0, 1.0, GridBagConstraints.WEST, GridBagConstraints.HORIZONTAL, 1);
+			row++;
 		}
 		
 		platformScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
@@ -275,6 +283,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	 * @param anchor where the anchor is set for the Component
 	 * @param fill how the Component fills
 	 * @param gridheight sets the Components height
+	 * @param gridwidth sets the Components width
 	 */
 	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, int gridheight, int gridwidth){
 		c.gridx = gridx;
@@ -302,7 +311,6 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	 * @param anchor where the anchor is set for the Component
 	 * @param fill how the Component fills
 	 * @param gridheight sets the Components height
-	 * @param gridwidth sets the Components width
 	 */
 	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, Insets insets, int gridheight){
 		c.gridx = gridx;

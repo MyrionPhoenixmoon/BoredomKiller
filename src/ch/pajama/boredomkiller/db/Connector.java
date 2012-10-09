@@ -24,6 +24,7 @@ public class Connector {
 	public Connection getConnection(){
 		try{
 			conn = DriverManager.getConnection("jdbc:mysql://" + this.ip + ":" + this.portNumber + "/", connectionProps);
+			conn.createStatement().executeQuery("use boredomkiller;");
 			System.out.println("Connected to database :D");
 			return conn;
 		}
