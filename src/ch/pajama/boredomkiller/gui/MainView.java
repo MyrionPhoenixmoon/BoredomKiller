@@ -13,6 +13,8 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -101,7 +103,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	private JCheckBox cbMalus = new JCheckBox();
 	
 	//Dialog to add a Player
-	private JDialog newPlayer = new JDialog(this);
+	private JDialog newPlayer;
 	private JTextField newPlayerTf = new JTextField();
 	private JButton newPlayerOk = new JButton(" Let's a go! ");
 	private JButton newPlayerCancel = new JButton(" Cancel ");
@@ -356,7 +358,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(ae.getSource().equals(playerAdd)){
-			//TODO add Keylistener for Enter Key
+			newPlayer = new JDialog(this);
 			newPlayer.setSize(300, 100);
 			newPlayer.setLocation(this.getLocation().x + 20, this.getLocation().y + 120);
 			newPlayer.setTitle("A Challenger has appeared!");
@@ -369,6 +371,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			newPlayerCancel.setBackground(newPlayerColor);
 			newPlayerCancel.setForeground(new Color(0, 50, 100));
 			newPlayer.setLayout(lm);
+			newPlayer.getRootPane().setDefaultButton(newPlayerOk);
 
 			newPlayerCancel.addMouseListener(this);
 			newPlayerCancel.addActionListener(this);
@@ -394,7 +397,6 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			}
 		} else if (ae.getSource().equals(newPlayerCancel)){
 			newPlayer.setVisible(false);
-			newPlayerTf.setText("");
 		} else if (ae.getSource().equals(genreCheck)){
 			Component[] cbs = genrePanel.getComponents();
 			for(int i = 0; i < cbs.length; i++){
