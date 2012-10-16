@@ -40,8 +40,11 @@ import javax.swing.border.TitledBorder;
 
 import ch.pajama.boredomkiller.db.Connector;
 import ch.pajama.boredomkiller.db.QueryHandler;
+import ch.pajama.boredomkiller.db.model.Difficulty;
 import ch.pajama.boredomkiller.db.model.GameType;
 import ch.pajama.boredomkiller.db.model.Platform;
+import ch.pajama.boredomkiller.db.model.Playstyle;
+import ch.pajama.boredomkiller.roll.Roller;
 
 public class MainView extends JFrame implements ActionListener, MouseListener{
 	private static final long serialVersionUID = 3413030932581242622L;
@@ -152,6 +155,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		addComponent(mainPanel, miscPanel, 0, 1, 1.0, 2.0, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, 1);
 		killButton.setBackground(new Color(40, 40, 40));
 		killButton.setForeground(new Color(255, 255, 255));
+		killButton.addActionListener(this);
 		killButton.addMouseListener(this);
 		addComponent(mainPanel, killButton, 0, 2, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 	}
@@ -417,6 +421,39 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			for(int i = 0; i < cbs.length; i++){
 				((JCheckBox)cbs[i]).setSelected(false);
 			}
+		} else if (ae.getSource().equals(killButton)){
+			ArrayList<Playstyle> playstyles = new ArrayList<Playstyle>();
+			if(cbSingleplayer.isSelected()){
+				playstyles.add(new Playstyle("Singleplayer"));
+			}
+			if(cbCoop.isSelected()){
+				playstyles.add(new Playstyle("Co-op"));
+			}
+			if(cbVersus.isSelected()){
+				playstyles.add(new Playstyle("Versus"));
+			}
+			
+			ArrayList<GameType> gametypes = new ArrayList<GameType>();
+			Component[] cblist = genrePanel.getComponents();
+			for(int i = 0; i < cblist.length; i++){
+				if(((JCheckBox)cblist[i]).isSelected()){
+					gametypes.add(genreListData.get(i));
+				}
+			}
+			
+			ArrayList<Platform> platforms = new ArrayList<Platform>();
+			cblist = platformPanel.getComponents();
+			for(int i = 0; i < cblist.length; i++){
+				if(((JCheckBox)cblist[i]).isSelected()){
+					platforms.add(platformListData.get(i));
+				}
+			}
+			
+			/*Difficulty difficulty;
+			String setting;*/
+			//TODO difficulty and setting, too lazy for it now
+			Roller r = new Roller(playerListData.size(), playstyles.toArray(new Playstyle[]{}), gametypes.toArray(new GameType[]{}), platforms.toArray(new Platform[]{}), new Difficulty("Easy"), "Globally", con.getConnection());
+			//Roller r = new Roller(playerListData.size(), (Playstyle[])playstyles.toArray(), (GameType[])gametypes.toArray(), platforms, difficulty, setting, con.getConnection());
 		}
 	}
 
