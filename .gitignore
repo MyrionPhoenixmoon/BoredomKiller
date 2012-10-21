@@ -165,4 +165,4 @@ pip-log.txt
 
 #webadmin
 /src/webadmin/nbproject
-
+/src/webadmin/config/database.php
