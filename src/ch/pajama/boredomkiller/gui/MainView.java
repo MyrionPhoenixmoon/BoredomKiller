@@ -291,7 +291,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	 * @param gridheight sets the Components height
 	 * @param gridwidth sets the Components width
 	 */
-	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, int gridheight, int gridwidth){
+	protected void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, int gridheight, int gridwidth){
 		c.gridx = gridx;
 		c.gridy = gridy;
 		c.weightx = weightx;
@@ -318,7 +318,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	 * @param fill how the Component fills
 	 * @param gridheight sets the Components height
 	 */
-	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, Insets insets, int gridheight){
+	protected void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, Insets insets, int gridheight){
 		c.gridx = gridx;
 		c.gridy = gridy;
 		c.weightx = weightx;
@@ -344,7 +344,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	 * @param gridheight sets the Components height
 	 * @param gridwidth sets the Components width
 	 */
-	private void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, int gridheight){
+	protected void addComponent(Container con, Component toadd, int gridx, int gridy, double weightx, double weighty, int anchor, int fill, int gridheight){
 		c.gridx = gridx;
 		c.gridy = gridy;
 		c.weightx = weightx;
@@ -452,8 +452,10 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			/*Difficulty difficulty;
 			String setting;*/
 			//TODO difficulty and setting, too lazy for it now
-			Roller r = new Roller(playerListData.size(), playstyles.toArray(new Playstyle[]{}), gametypes.toArray(new GameType[]{}), platforms.toArray(new Platform[]{}), new Difficulty("Easy"), "Globally", con.getConnection());
+			Roller r = new Roller(playerListData.size(), playstyles.toArray(new Playstyle[]{}), gametypes.toArray(new GameType[]{}), platforms.toArray(new Platform[]{}), new Difficulty("Easy"), "Globally", con);
 			//Roller r = new Roller(playerListData.size(), (Playstyle[])playstyles.toArray(), (GameType[])gametypes.toArray(), platforms, difficulty, setting, con.getConnection());
+			
+			new ResultView(this, r.getGame(), r.getMap(), r.getMode(), r.getChallenge());
 		}
 	}
 

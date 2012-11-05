@@ -1,6 +1,6 @@
 package ch.pajama.boredomkiller.roll;
 
-import java.sql.Connection;
+import java.util.ArrayList;
 
 import ch.pajama.boredomkiller.db.Connector;
 import ch.pajama.boredomkiller.db.QueryHandler;
@@ -13,7 +13,7 @@ public class Roller {
 	private Platform[] platforms;
 	private Difficulty difficulty;
 	private String setting;
-	private Connection con;
+	private Connector con;
 	private QueryHandler qh;
 	
 	private Game game;
@@ -21,7 +21,7 @@ public class Roller {
 	private Mode mode;
 	private Challenge challenge;
 	
-	public Roller(int amountPlayers, Playstyle[] playstyles, GameType[] gametypes, Platform[] platforms, Difficulty difficulty, String setting, Connection con) {
+	public Roller(int amountPlayers, Playstyle[] playstyles, GameType[] gametypes, Platform[] platforms, Difficulty difficulty, String setting, Connector con) {
 		this.amountPlayers = amountPlayers;
 		this.playstyles = playstyles;
 		this.gametypes = gametypes;
@@ -29,29 +29,40 @@ public class Roller {
 		this.difficulty = difficulty;
 		this.setting = setting;
 		this.con = con;
-		qh = new QueryHandler(con);
+		qh = new QueryHandler(con.getConnection());
 		
-		rollGame();
-		rollMap();
-		rollMode();
-		rollChallenge();
+		game = rollGame();
+		map = rollMap();
+		mode = rollMode();
+		challenge = rollChallenge();
+		
+		System.out.println("Game: " + game.getName());
+		System.out.println("Map: " + map.getName());;
+		System.out.println("Mode: " + mode.getName());
+		System.out.println("Challenge: " + challenge.getName());
 	}
 	
-	private void rollGame(){
-		//TODO
-		qh.getGames(platforms, gametypes, playstyles, amountPlayers);
+	private Game rollGame(){
+		ArrayList<Game> games = qh.getGames(platforms, gametypes, playstyles, amountPlayers);
+		
+		int random = (int) Math.round(Math.random()*(games.size()-1));
+		
+		return games.get(random);
 	}
 
-	private void rollMap(){
+	private Map rollMap(){
 		//TODO
+		return new Map("TODO", null, null);
 	}
 	
-	private void rollMode(){
+	private Mode rollMode(){
 		//TODO
+		return new Mode("TODO", null, null);
 	}
 	
-	private void rollChallenge(){
+	private Challenge rollChallenge(){
 		//TODO
+		return new Challenge("TODO", null, null, null, null);
 	}
 	
 	public Game getGame() {

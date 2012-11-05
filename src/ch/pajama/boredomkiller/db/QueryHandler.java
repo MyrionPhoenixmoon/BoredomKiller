@@ -106,7 +106,9 @@ public class QueryHandler {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()){
-				System.out.println(rs.getString("name"));
+				//TODO replace null with real values
+				Game g = new Game(rs.getString("name"), null, null, null, null);
+				games.add(g);
 			}
 		} catch(SQLException e){
 			e.printStackTrace();
