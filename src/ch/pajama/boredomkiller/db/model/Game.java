@@ -7,24 +7,35 @@ public class Game {
 	private Platform[] plats;
 	private Playstyle[] playstyles;
 	private GameType[] gametypes;
+	private Mode[] modes;
 	
 	public Game(String name, Statistic stat, Platform[] plats,
-			Playstyle[] playstyles, GameType[] gametypes) {
+			Playstyle[] playstyles, GameType[] gametypes, Mode[] modes) {
 		this.name = name;
 		this.stat = stat;
 		this.plats = plats;
 		this.playstyles = playstyles;
 		this.gametypes = gametypes;
+		this.modes = modes;
 	}
 
 	public Game(String name, String theme_loc, Statistic stat,
-			Platform[] plats, Playstyle[] playstyles, GameType[] gametypes) {
+			Platform[] plats, Playstyle[] playstyles, GameType[] gametypes, Mode[] modes) {
 		this.name = name;
 		this.theme_loc = theme_loc;
 		this.stat = stat;
 		this.plats = plats;
 		this.playstyles = playstyles;
 		this.gametypes = gametypes;
+		this.modes = modes;
+	}
+
+	public Mode[] getModes() {
+		return modes;
+	}
+
+	public void setModes(Mode[] modes) {
+		this.modes = modes;
 	}
 
 	public String getName() {

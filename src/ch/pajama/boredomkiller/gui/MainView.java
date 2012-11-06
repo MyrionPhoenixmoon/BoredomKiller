@@ -449,10 +449,21 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 				}
 			}
 			
+			ArrayList<Difficulty> difficulties = new ArrayList<Difficulty>();
+			if(cbEasy.isSelected()){
+				difficulties.add(new Difficulty("Easy"));
+			}
+			if(cbMedium.isSelected()){
+				difficulties.add(new Difficulty("Medium"));
+			}
+			if(cbHard.isSelected()){
+				difficulties.add(new Difficulty("Hard"));
+			}
+			
 			/*Difficulty difficulty;
 			String setting;*/
 			//TODO difficulty and setting, too lazy for it now
-			Roller r = new Roller(playerListData.size(), playstyles.toArray(new Playstyle[]{}), gametypes.toArray(new GameType[]{}), platforms.toArray(new Platform[]{}), new Difficulty("Easy"), "Globally", con);
+			Roller r = new Roller(playerListData.size(), playstyles.toArray(new Playstyle[]{}), gametypes.toArray(new GameType[]{}), platforms.toArray(new Platform[]{}), difficulties.toArray(new Difficulty[]{}), "Globally", con);
 			//Roller r = new Roller(playerListData.size(), (Playstyle[])playstyles.toArray(), (GameType[])gametypes.toArray(), platforms, difficulty, setting, con.getConnection());
 			
 			new ResultView(this, r.getGame(), r.getMap(), r.getMode(), r.getChallenge());

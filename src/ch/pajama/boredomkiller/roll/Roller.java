@@ -11,7 +11,7 @@ public class Roller {
 	private Playstyle[] playstyles;
 	private GameType[] gametypes;
 	private Platform[] platforms;
-	private Difficulty difficulty;
+	private Difficulty[] difficulties;
 	private String setting;
 	private Connector con;
 	private QueryHandler qh;
@@ -21,12 +21,12 @@ public class Roller {
 	private Mode mode;
 	private Challenge challenge;
 	
-	public Roller(int amountPlayers, Playstyle[] playstyles, GameType[] gametypes, Platform[] platforms, Difficulty difficulty, String setting, Connector con) {
+	public Roller(int amountPlayers, Playstyle[] playstyles, GameType[] gametypes, Platform[] platforms, Difficulty[] difficulties, String setting, Connector con) {
 		this.amountPlayers = amountPlayers;
 		this.playstyles = playstyles;
 		this.gametypes = gametypes;
 		this.platforms = platforms;
-		this.difficulty = difficulty;
+		this.difficulties = difficulties;
 		this.setting = setting;
 		this.con = con;
 		qh = new QueryHandler(con.getConnection());
@@ -35,11 +35,6 @@ public class Roller {
 		map = rollMap();
 		mode = rollMode();
 		challenge = rollChallenge();
-		
-		System.out.println("Game: " + game.getName());
-		System.out.println("Map: " + map.getName());;
-		System.out.println("Mode: " + mode.getName());
-		System.out.println("Challenge: " + challenge.getName());
 	}
 	
 	private Game rollGame(){
@@ -47,13 +42,18 @@ public class Roller {
 		
 		if(games.size() > 0){
 			int random = (int) Math.round(Math.random()*(games.size()-1));
-			return games.get(random);
+			Game g = games.get(random);
+			
+			g.setGametypes(qh.getGameTypes(g).toArray(new GameType[]{}));
+			g.setPlaystyles(qh.getPlaystyles(g).toArray(new Playstyle[]{}));
+			
+			return g;
 		}
-		else return new Game("No Match found!", null, null, null, null);
+		else return new Game("No Match found!", null, null, null, null, null);
 	}
 
 	private Map rollMap(){
-		ArrayList<Map> maps = qh.getMaps(game, playstyles);
+		ArrayList<Map> maps = qh.getMaps(game);
 		
 		if(maps.size() > 0){
 			int random = (int) Math.round(Math.random()*(maps.size()-1));
@@ -63,7 +63,7 @@ public class Roller {
 	}
 	
 	private Mode rollMode(){
-		ArrayList<Mode> modes = qh.getModes(game, playstyles);
+		ArrayList<Mode> modes = qh.getModes(game);
 		
 		if(modes.size() > 0){
 			int random = (int) Math.round(Math.random()*(modes.size()-1));
@@ -73,8 +73,13 @@ public class Roller {
 	}
 	
 	private Challenge rollChallenge(){
-		//TODO
-		return new Challenge("TODO", null, null, null, null);
+		ArrayList<Challenge> challenges = qh.getChallenges(game, difficulties);
+		
+		if(challenges.size() > 0){
+			int random = (int) Math.round(Math.random()*(challenges.size()-1));
+			return challenges.get(random);
+		}
+		else return new Challenge("No Challenge found! (shouldn't happen!!!)", null, null, null, null);
 	}
 	
 	public Game getGame() {
