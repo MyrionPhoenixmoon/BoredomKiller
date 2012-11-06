@@ -63,8 +63,13 @@ public class Roller {
 	}
 	
 	private Mode rollMode(){
-		//TODO
-		return new Mode("TODO", null, null);
+		ArrayList<Mode> modes = qh.getModes(game, playstyles);
+		
+		if(modes.size() > 0){
+			int random = (int) Math.round(Math.random()*(modes.size()-1));
+			return modes.get(random);
+		}
+		else return new Mode("No Mode found!", null, null);
 	}
 	
 	private Challenge rollChallenge(){
