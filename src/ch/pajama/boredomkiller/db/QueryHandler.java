@@ -10,6 +10,7 @@ import java.util.Iterator;
 
 import ch.pajama.boredomkiller.db.model.Game;
 import ch.pajama.boredomkiller.db.model.GameType;
+import ch.pajama.boredomkiller.db.model.Map;
 import ch.pajama.boredomkiller.db.model.Platform;
 import ch.pajama.boredomkiller.db.model.Playstyle;
 
@@ -115,5 +116,40 @@ public class QueryHandler {
 		}
 		
 		return games;
+	}
+	
+	public ArrayList<Map> getMaps(Game game, Playstyle[] playstyles){
+		ArrayList<Map> maps = new ArrayList<Map>();
+		
+		String playstylequery;
+		if(playstyles.length == 1){
+			playstylequery = "tbl_playstyles.name = '" + playstyles[0].getName() + "'";
+		}
+		else{
+			playstylequery = "( ";
+			for(int i = 0; i < playstyles.length; i++){
+				playstylequery += "tbl_playstyles.name = '" + playstyles[i].getName() + "'";
+				if(i != playstyles.length-1){
+					playstylequery += " OR ";
+				}
+			}
+			playstylequery += ")";
+		}
+		
+		String query = "SELECT tbl_maps.id, tbl_maps.name FROM tbl_maps LEFT JOIN tbl_games ON tbl_maps.id_game = tbl_games.id LEFT JOIN tbl_map_has_playstyle ON tbl_maps.id = tbl_map_has_playstyle.id_map LEFT JOIN tbl_playstyles ON tbl_playstyles.id = tbl_map_has_playstyle.id_playstyle WHERE " + playstylequery + " AND tbl_games.name = '" + game.getName() + "';";
+		
+		try{
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()){
+				//TODO replace null with real values
+				Map m = new Map(rs.getString("name"), null, null);
+				maps.add(m);
+			}
+		} catch(SQLException e){
+			e.printStackTrace();
+		}
+		
+		return maps;
 	}
 }

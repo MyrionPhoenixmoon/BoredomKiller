@@ -45,14 +45,21 @@ public class Roller {
 	private Game rollGame(){
 		ArrayList<Game> games = qh.getGames(platforms, gametypes, playstyles, amountPlayers);
 		
-		int random = (int) Math.round(Math.random()*(games.size()-1));
-		
-		return games.get(random);
+		if(games.size() > 0){
+			int random = (int) Math.round(Math.random()*(games.size()-1));
+			return games.get(random);
+		}
+		else return new Game("No Match found!", null, null, null, null);
 	}
 
 	private Map rollMap(){
-		//TODO
-		return new Map("TODO", null, null);
+		ArrayList<Map> maps = qh.getMaps(game, playstyles);
+		
+		if(maps.size() > 0){
+			int random = (int) Math.round(Math.random()*(maps.size()-1));
+			return maps.get(random);
+		}
+		else return new Map("No Map found!", null, null);
 	}
 	
 	private Mode rollMode(){
