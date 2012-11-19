@@ -49,14 +49,27 @@ public class ResultView extends JDialog{
 	private void setup(){
 		this.setTitle("Know thine destiny!");
 		this.setResizable(false);
-		this.setSize(500, 230);
 		this.setLocation(300, 300);
 		
 		gameLabel = new JLabel(game.getName());
+		gameLabel.setForeground(new Color(150, 200, 255));
 		mapLabel = new JLabel(map.getName());
+		mapLabel.setForeground(new Color(220, 170, 255));
 		modeLabel = new JLabel(mode.getName());
+		modeLabel.setForeground(new Color(255, 150, 200));
+		
 		challengeLabel = new JLabel(challenge.getName());
 		descriptionLabel = new JLabel("<html><p>" + challenge.getDescription() + "</p></html>");
+		if(challenge.getDifficulty().getDifficulty().equals("Easy")){
+			challengeLabel.setForeground(new Color(255, 255, 150));
+			descriptionLabel.setForeground(new Color(255, 255, 150));
+		} else if(challenge.getDifficulty().getDifficulty().equals("Medium")){
+			challengeLabel.setForeground(new Color(255, 205, 150));
+			descriptionLabel.setForeground(new Color(255, 205, 150));
+		} else if(challenge.getDifficulty().getDifficulty().equals("Hard")){
+			challengeLabel.setForeground(new Color(255, 155, 150));
+			descriptionLabel.setForeground(new Color(255, 155, 150));
+		}
 		
 		mainPanel.setBorder(new TitledBorder(new LineBorder(new Color(150, 150, 150)), "You Play"));
 		mainPanel.setLayout(lm);
@@ -73,6 +86,8 @@ public class ResultView extends JDialog{
 		((MainView)this.getParent()).addComponent(this, mainPanel, 0, 0, 1.0, 1.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, 1);
 		((MainView)this.getParent()).addComponent(this, challengePanel, 0, 1, 1.0, 1.0, GridBagConstraints.SOUTH, GridBagConstraints.BOTH, 1);
 		
+		this.pack();
+		this.setSize(250, this.getSize().height + 50);
 		this.setVisible(true);
 	}
 }
