@@ -1,11 +1,8 @@
 package ch.pajama.boredomkiller.gui;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -13,8 +10,6 @@ import java.awt.Insets;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
@@ -23,8 +18,6 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.AbstractButton;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -270,8 +263,6 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 	
 	private static void setupTheme(){
 		try {
-			//TODO adjust Theme (Dialog Box / ScrollPanes)
-			
 	        javax.swing.UIManager.setLookAndFeel("com.jtattoo.plaf.hifi.HiFiLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -462,7 +453,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 			
 			/*Difficulty difficulty;
 			String setting;*/
-			//TODO difficulty and setting, too lazy for it now
+			//TODO setting, too lazy for it now
 			Roller r = new Roller(playerListData.size(), playstyles.toArray(new Playstyle[]{}), gametypes.toArray(new GameType[]{}), platforms.toArray(new Platform[]{}), difficulties.toArray(new Difficulty[]{}), "Globally", con);
 			//Roller r = new Roller(playerListData.size(), (Playstyle[])playstyles.toArray(), (GameType[])gametypes.toArray(), platforms, difficulty, setting, con.getConnection());
 			

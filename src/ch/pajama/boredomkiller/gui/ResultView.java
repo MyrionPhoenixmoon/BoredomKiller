@@ -52,22 +52,22 @@ public class ResultView extends JDialog{
 		this.setLocation(300, 300);
 		
 		gameLabel = new JLabel(game.getName());
-		gameLabel.setForeground(new Color(150, 200, 255));
+		gameLabel.setForeground(new Color(140, 255, 155));
 		mapLabel = new JLabel(map.getName());
-		mapLabel.setForeground(new Color(220, 170, 255));
+		mapLabel.setForeground(new Color(180, 255, 195));
 		modeLabel = new JLabel(mode.getName());
-		modeLabel.setForeground(new Color(255, 150, 200));
+		modeLabel.setForeground(new Color(220, 255, 235));
 		
 		challengeLabel = new JLabel(challenge.getName());
 		descriptionLabel = new JLabel("<html><p>" + challenge.getDescription() + "</p></html>");
 		if(challenge.getDifficulty().getDifficulty().equals("Easy")){
-			challengeLabel.setForeground(new Color(255, 255, 150));
+			challengeLabel.setForeground(new Color(255, 215, 110));
 			descriptionLabel.setForeground(new Color(255, 255, 150));
 		} else if(challenge.getDifficulty().getDifficulty().equals("Medium")){
-			challengeLabel.setForeground(new Color(255, 205, 150));
+			challengeLabel.setForeground(new Color(255, 165, 110));
 			descriptionLabel.setForeground(new Color(255, 205, 150));
 		} else if(challenge.getDifficulty().getDifficulty().equals("Hard")){
-			challengeLabel.setForeground(new Color(255, 155, 150));
+			challengeLabel.setForeground(new Color(255, 115, 110));
 			descriptionLabel.setForeground(new Color(255, 155, 150));
 		}
 		
