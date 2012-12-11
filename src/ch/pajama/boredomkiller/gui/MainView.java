@@ -163,6 +163,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		playerList.setForeground(playerColor);
 		playerList.setListData(playerListData.toArray());
 		playerScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
+		playerScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		addComponent(filterPanel, playerScrollPane, 1, 0, 1.0, 10.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 3);
 		playerAdd.addActionListener(this);
 		playerAdd.setBackground(playerColor);
@@ -199,6 +200,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		}
 		
 		genreScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
+		genreScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		addComponent(filterPanel, genreScrollPane, 1, 6, 1.0, 10.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 3);
 		genreCheck.addActionListener(this);
 		genreCheck.setBackground(genreColor);
@@ -226,6 +228,7 @@ public class MainView extends JFrame implements ActionListener, MouseListener{
 		}
 		
 		platformScrollPane.setBorder(new LineBorder(new Color(150, 150, 150)));
+		platformScrollPane.getVerticalScrollBar().setUnitIncrement(20);
 		addComponent(filterPanel, platformScrollPane, 1, 9, 1.0, 10.0, GridBagConstraints.NORTH, GridBagConstraints.BOTH, new Insets(5, 5, 5, 5), 3);
 		platformCheck.addActionListener(this);
 		platformCheck.setBackground(platformColor);
