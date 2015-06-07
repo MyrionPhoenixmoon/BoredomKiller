@@ -1,0 +1,165 @@
+/* Stuff for sticky footer */
+html,
+body {
+    height: 100%;
+    background: url("http://localhost/cms/assets/img/background.png");
+}
+
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    margin: 0 auto -61px;
+}
+
+#wrap > .container {
+    padding-top: 70px;
+}
+
+.content-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 1px solid #ddd;
+    background: #eee;
+    background: linear-gradient(to bottom, #eee, #e6e6e6);
+    padding: 10px;
+    font-size: 15px;
+    color: #666;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.content {
+    border-radius: 5px;
+    box-shadow: 0 0 2px #999;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+
+.content-text {
+    padding: 10px;
+}
+
+#push,
+#footer {
+    height: 60px;
+}
+
+#footer {
+    background: #666;
+    background: linear-gradient(to bottom, #777, #666);
+    border-top: 1px solid #222;
+    box-shadow: 0 1px 0 #999 inset, 0 -1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 60px;
+}
+
+#footer .copyright {
+    color: #bbb;
+    float: left;
+    text-shadow: 1px 1px 0 #333;
+}
+
+#footer .info {
+    margin-left: 30px;
+    font-size: 12px;
+    color: #333;
+    text-shadow: 1px 1px 0 #777;
+    float: left;
+}
+
+@media (max-width: 767px) {
+    #footer {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+}
+
+/* Clearfix */
+
+.clear {
+    clear: both;
+}
+
+/* Submenu */
+
+.navbar-second {
+    background: #666;
+    background: linear-gradient(to bottom, #777777, #666666);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    height: 30px;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #222;
+    position: fixed;
+    top: 41px;
+    width: 100%;
+    line-height: 30px;
+    color: #bbb;
+}
+
+.navbar-second-inner {
+    font-size: 12px;
+    text-shadow: 1px 1px 0 #333;
+}
+
+.navbar-second-title {
+    float: left;
+    font-size: 15px;
+    margin-right: 30px;
+}
+
+.navbar-second-nav li {
+    float: left;
+    list-style: none;
+    line-height: 30px;
+    position: relative;
+}
+
+.navbar-second-nav li a {
+    display: block;
+    height: 100%;
+    text-decoration: none;
+    color: #bbb;
+    padding: 0 10px;
+}
+
+.navbar-second-nav li a:hover {
+    text-decoration: none;
+    color: #aaa;
+    background: linear-gradient(to bottom, #666666, #555555);
+}
+
+.navbar-second-nav li.active:before {
+    position: absolute;
+    content: url("http://localhost/cms/assets/img/menu-arrow.png");
+    left: 50%;
+    top: 17px;
+    margin-left: -6px;
+}
+
+.error-span {
+    margin-left: none;
+    float: none;
+}
+
+.message-bar {
+    position: fixed;
+    height: 41px;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    line-height: 41px;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, .25);
+    color: #fff;
+    display: none;
+}
+
+.message-bar.success {
+    background: #5BB75B;
+    background: linear-gradient(to bottom, #62C462, #51A351);;
+}
+
+.message-bar.error {
+    background: #DA4F49;
+    background: linear-gradient(to bottom, #EE5F5B, #BD362F);
+}

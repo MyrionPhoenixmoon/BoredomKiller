@@ -166,3 +166,4 @@ pip-log.txt
 #webadmin
 /src/webadmin/nbproject
 /src/webadmin/application/config/database.php
+/src/hanspeter/nbproject/private/
